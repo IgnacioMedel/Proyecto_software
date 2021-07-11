@@ -1,15 +1,152 @@
 <!DOCTYPE html>
+
 <html>
   <head>
-    <title>ProyectoSoftware</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+    <title>Animal Lover ♥</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href=<%=public_path%>>
+          <img src=<i class="fas fa-dog fa-3x"></i>
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href=<%=public_path%>>
+            <span class="icon has-text-link ob-icon-rpad is-large">
+              <i class="fas fa-home"></i>
+            </span>
+            Home
+          </a>
+
+          <a class="navbar-item" href=<%=contact_path%>>
+            <span class="icon has-text-link ob-icon-rpad is-large">
+              <i class="far fa-address-book"></i>
+            </span>
+            Contacto
+          </a>
+          <% if current_user%>
+            <%if !current_user.administrador%>
+              <%= link_to show_user_publications_path(id: current_user.id), class: "navbar-item", method: :get do%>
+                <span class="icon has-text-link ob-icon-rpad is-large">
+                  <i class="far fa-newspaper"></i>
+                </span>
+                Mis Publicaciones
+              <% end %>
+              <%= link_to chats_show_path(id: current_user.id), class: "navbar-item", method: :get do%>
+                <span class="icon has-text-link ob-icon-rpad is-large">
+                  <i class="fas fa-envelope-square"></i>
+                </span>
+                Mis Mensajes
+              <% end %>
+
+              <%= link_to request_path(current_user.id), class: "navbar-item", method: :get do%>
+                <span class="icon has-text-link ob-icon-rpad is-large">
+                  <i class="fas fa-search"></i>
+                </span>
+                Mis Solicitudes
+              <% end %>
+
+              <%= link_to review_path(current_user.id), class: "navbar-item", method: :get do%>
+                <span class="icon has-text-link ob-icon-rpad is-large">
+                  <i class="fas fa-file-contract"></i>
+                </span>
+                Mis Clasificaciones
+              <% end %>
+            <%else%>
+                <%= link_to users_path, class: "navbar-item", method: :get do%>
+                  <span class="icon has-text-link ob-icon-rpad is-large">
+                    <i class="fas fa-users"></i>
+                  </span>
+                  Usuarios
+                <% end %>
+                <%= link_to publications_path, class: "navbar-item", method: :get do%>
+                  <span class="icon has-text-link ob-icon-rpad is-large">
+                    <i class="fas fa-file-alt"></i>
+                  </span>
+                  Publicaciones
+                <% end %>
+                <%= link_to root_path, class: "navbar-item", method: :get do%>
+                  <span class="icon has-text-link ob-icon-rpad is-large">
+                    <i class="fas fa-comments"></i>
+                  </span>
+                  Comentarios
+                <% end %>
+                <%= link_to reviews_path, class: "navbar-item", method: :get do%>
+                  <span class="icon has-text-link ob-icon-rpad is-large">
+                    <i class="fas fa-thumbs-up"></i>
+                  </span>
+                  Reseñas
+                <% end %>
+            <%end%>
+          
+          <%end%>
+        </div>
+        <% if !current_user%>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary" href=<%=new_user_session_path%>>
+                  <strong>Iniciar sesión</strong>
+                </a>
+                <a class="button is-light" href=<%=new_user_registration_path%>> 
+                  <strong>Registrarse</strong>
+                </a>
+              </div>
+            </div>
+          </div>
+        <% else%>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary" href=<%=users_show_path(current_user.id)%>>
+                  <strong>Mi perfil</strong>
+                </a>
+                <%= link_to destroy_user_session_path, class: "navbar-item", method: :delete do%>
+                  <span class="icon has-text-link ob-icon-rpad">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  Logout
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </nav>
   </head>
 
+
   <body>
-    <%= yield %>
+  <br>
+  <br>
+ 
+    <div class="container">
+      <div class="notification is-info">
+
+        <%= yield %>
+      </div>
+    </div>
   </body>
-</html>
+
+  <footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      ♥♥♥ Aplicación creada con amor por <strong>Renata Barrera, Ignacio Medel y Raimundo Murúa</strong> ♥♥♥
+    </p>
+  </div>
+</footer>
+</html> 

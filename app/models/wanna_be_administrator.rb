@@ -1,0 +1,2 @@
+class WannaBeAdministrator < ApplicationRecord
+end

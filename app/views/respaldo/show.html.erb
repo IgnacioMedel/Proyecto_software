@@ -1,0 +1,18 @@
+<div>
+    <h3>Nombre</h3>
+    <p><%= @user.nombre %></p>
+</div>
+
+<div>
+    <h3>Numero</h3>
+    <p><%= @user.numero %></p>
+</div>
+
+<div>
+    <h3>Mail</h3>
+    <p><%= @user.mail %></p>
+</div>
+
+<%= link_to 'Editar', edit_user_path(@user)%>
+<%= link_to 'Volver', users_path %>
+<%= link_to 'Eliminar', user_path(@user), method: :delete %>

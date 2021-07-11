@@ -1,0 +1,130 @@
+<h1 class="title">¿Que es nuevo, <%= resource.nombre%>?</h1>
+
+<div class="columns is-mobile">
+  <div class="column is-two-fifths">
+      <% if @user.image.attached? %>
+          <%= image_tag @user.image, class: "sm-img", size: "350x250" %>
+      <%else%>
+          <img src="https://sworna.com/wp-content/uploads/2020/07/pp.png", size:"350x250">
+      <% end %>
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
+
+        <!-- Cambiar Foto de Perfil -->
+        <p>Cambiar foto</p>
+        <div class='level-left'>
+          <div class="level-item">
+              <%= f.file_field :image, class:"button is-small is-success",accept: 'image/png, image/jpeg, image/jpg' %>
+          </div>
+
+        <!-- Eliminar Foto de Perfil -->
+          <% if @user.image.attached? %>
+            <div class="level-item">
+              <%= link_to delete_image_attachment_user_path(@user.id), class: "buttons", method: :delete do%>
+                <span class="button is-small is-danger">
+                  Eliminar Foto
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+  </div>
+        <div class="column is-one-fifths">
+
+            <!-- Nombre Usuario -->
+            <div class="field">
+              <%= f.label :nombre %><br />
+              <%= f.text_field :nombre, autofocus: true, autocomplete: "name"%>
+            </div>
+
+            <!-- Numero usuario-->
+            <div class="field">
+              <%= f.label :número %><br />
+              <%= f.text_field :numero%>
+            </div>
+
+            <!-- Genero usuario-->
+            <div class="field">
+              <%= f.label :género %><br />
+              <%= f.label :genero, "Mujer", :value => "mujer"  %>
+              <%= f.radio_button :genero, "mujer" %>
+              <br>
+              <%= f.label :genero, "Hombre", :value => "hombre" %>
+              <%= f.radio_button :genero, "hombre" %>
+              <br>
+              <%= f.label :genero, "No binario", :value => "no_binario" %>
+              <%= f.radio_button :genero, "no_binario"%>
+            </div>
+
+            <!-- Comuna usuario-->
+            <div class="field">
+              <%= f.label :comuna %><br />
+              <%= f.text_field :comuna%>
+            </div>
+
+            <!-- Ciudad usuario-->
+            <div class="field">
+              <%= f.label :ciudad %><br />
+              <%= f.text_field :ciudad%>
+            </div> 
+
+            <!-- Mail usuario-->
+            <div class="field">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            </div>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+
+            <!-- Nueva Clave usuario-->
+            <div class="field">
+              <%= f.label :nueva_clave %> <i style="color:black">(No rellenar si desea mantener clave)</i><br />
+              <%= f.password_field :password, autocomplete: "new-password" %>
+              <% if @minimum_password_length %>
+                <br />
+                <em><%= @minimum_password_length %> caracteres minimo.</em>
+              <% end %>
+            </div>
+
+            <!-- Nueva Clave usuario Confirmacion-->
+            <div class="field">
+              <%= f.label :nueva_clave_confirmacion %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+            </div>
+
+            <!-- Antigua Clave usuario-->
+            <div class="field">
+              <%= f.label :clave_actual %> <i style="color:black">(Rellenar para aplicar cambios)</i><br />
+              <%= f.password_field :current_password, autocomplete: "current-password" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Update" %>
+            </div>
+          <% end %>
+        </div>
+  
+  <div class="column is-one-fifths">
+    <div class="level">
+      <div class="level-item"> 
+        <%= link_to user_registration_path(@user.nombre), class:"button is-danger is-light", data: { confirm: "¿Seguro :c?" }, method: :delete do%>
+          <span class="icon-text has-text-danger">
+              <span class="icon">
+                  <i class="fas fa-ban"></i>
+              </span>
+              <span>Eliminar Cuenta</span>
+          </span>
+        <% end %>
+      </div>
+      <div class="level-item"> 
+        <figure class="image is-64x64">
+          <img class="is-rounded" src="https://i.pinimg.com/originals/c1/40/da/c140da8beca4d70cb27493a762d8b7a0.gif">
+        </figure>
+      </div>
+    </div>
+  </div>
+
+</div>

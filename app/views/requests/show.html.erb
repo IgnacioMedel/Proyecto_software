@@ -1,0 +1,80 @@
+<% if user_signed_in?%>
+    <% if !@requests.empty? %>
+        <h1 class="title">¡Tus publicaciones tienen interesados, <%=current_user.nombre%>♥!</h1>
+        <i class="subtitle">(No nos sorpende♥)</i>
+        <br>
+        <br>
+    <% else%>
+        <h1 class="title">¡Whooops! No hay nada aqui aún, <%=current_user.nombre%> :(</h1>
+        <br>
+        <br>    
+    <% end%>
+    <div style="display: flex; flex-flow: row wrap; ">
+        <% if @requests.empty? %>
+            <p>Tus publicaciones aún no tienen interesados.</p>
+            <br>
+            <br>      
+        <% else %>
+            <% @requests.each do |request| %>
+                <div style="border: solid 1px; width: 250px; padding:40px; align-text: center; margin: 1px;">
+                    <nav class="level">
+                        <div class="level-item-left">
+                            <% if User.find(request.requestor_id).image.attached? %>
+                                <%= image_tag User.find(request.requestor_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                            <%else%>
+                                <figure class="image is-48x48">
+                                    <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                                </figure>
+                            <% end %> 
+                        </div>
+                        <div class="level-item-right has-text-centered">
+                            <%=request.contenido.truncate(30)%>
+                        </div>
+                    </nav> 
+                    <nav class="level">
+                        <div class="level-item">
+                            <%= link_to process_request_path(request.id, status: "accepted"), class:"button is-small has-background-primary-light", data: { confirm: "¿Seguro que la quieres aceptar?" }, method: :put do%>
+                                    <span>Detalle</span>
+                            <% end %>
+                        </div>
+                        <div class="level-item">
+                            <%= link_to process_request_path(request.id, status: "accepted"), class:"button is-small is-success", data: { confirm: "¿Seguro que la quieres aceptar?" }, method: :put do%>
+                                    <span>Aceptar</span>
+                            <% end %>
+                        </div>
+                        <div class="level-item">
+                            <%= link_to process_request_path(request.id, status: "declined"), class:"button is-small is-danger", data: { confirm: "¿Seguro que la quieres rechazar?" }, method: :put do%>
+                                    <span>Rechazar</span>
+                            <% end %>
+                        </div>
+                    </nav> 
+                </div>
+            <% end%>
+        <%end%>
+    </div>
+<% else%>
+    <div class="columns is-mobile"> 
+        <div class="column">       
+            <h1 class="title">Acceso denegado :(</h1>
+            <br>
+            <p class="subtitle" "is-size-4">Nuestros usuarios confían en que no compartamos su información.</p>
+            <p class="subtitle" "is-size-4">No podemos mostrarte las solicitudes de otro usuario :(</p>
+        </div>
+        <div class="column"> 
+            <figure class="image is-256x256">
+                <img class="is-rounded" src="https://media1.tenor.com/images/dd3d446811e0c929f1a76ca87f389fa6/tenor.gif">
+            </figure>
+        </div>
+    </div>
+<% end%>
+<style>
+    .img-circular{
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    }
+</style>

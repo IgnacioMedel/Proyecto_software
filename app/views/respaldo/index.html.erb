@@ -1,0 +1,21 @@
+<style>
+.sm-img{
+    width: 200px;
+    height: auto;
+}
+</style>
+
+
+<h1> Usuarios </h1>
+<div>
+<% @users.each do |user|  %>
+    <div>
+        <h3><%= "#{user.nombre}" %></h3>
+        <p><%= "#{user.numero}"%></p>
+        <h3><%= link_to user.nombre, user_path(user) %></h3>
+        <p><% if user.image.attached? %></p>
+           <%= image_tag user.image, class: "sm-img" %>
+           <% end %></p>
+    </div>
+    <% end %>
+</div>

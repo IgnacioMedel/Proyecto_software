@@ -1,0 +1,105 @@
+<p><%= notice %></p>
+
+<nav class="level">
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+    <div class="level-item"></div>  
+    <%if @chat_info.requestor_id == current_user.id%>
+        <div class="level-item">        
+            <h1 class="title">Tu Chat con: <%=User.find(@chat_info.receiver_id).nombre%></h1>
+        </div>
+        <div class="level-item">
+            <% if User.find(@chat_info.receiver_id).image.attached? %>
+                <div class="level-item">
+                    <%= image_tag User.find(@chat_info.receiver_id).image, class: "sm-img", size: "96x96",:class=> "img-circular"%>
+                </div>
+            <%else%>
+                <div class="level-item">
+                    <figure class="image is-96x96">
+                        <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                    </figure>
+                </div>
+            <%end%>
+        </div>
+    <%else%>
+        <div class="level-item">        
+            <h1 class="title">Tu Chat con: <%=User.find(@chat_info.requestor_id).nombre%></h1>
+        </div>
+        <div class="level-item">
+            <% if User.find(@chat_info.requestor_id).image.attached? %>
+                <div class="level-item">
+                    <%= image_tag User.find(@chat_info.requestor_id).image, class: "sm-img", size: "96x96",:class=> "img-circular"%>
+                </div>
+            <%else%>
+                <div class="level-item">
+                    <figure class="image is-96x96">
+                        <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                    </figure>
+                </div>
+            <%end%>
+        </div>
+    <%end%>
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+    <div class="level-item"></div>
+</nav>
+
+<div class="columns">
+    <div class="column"></div>
+    <div class="column is-half has-background-white">
+        <% @messages.each do |message| %>
+            <%if message.speaker_id == current_user.id%>
+                <div class="level-right">
+                    <div class="level-item">
+                        <div class="has-text-black-bis"><%=message.contenido%></div>
+                    </div>
+                </div>
+            <%else%>
+                <div class="level-left">
+                    <div class="level-item">
+                        <div class="has-text-black-bis"><%=message.contenido%></div>
+                    </div>
+                </div>
+            <%end%>
+        <%end%>
+        <div class="level">
+            <div class="level-item">
+                <div>
+                    <%= render partial: "messages/new", locals: {chat: @chat_info} %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <%if @chat_info.requestor_id == current_user.id%>
+            <%= link_to user_path(@chat_info.receiver_id), class:"button is-small is-success", method: :get do%>
+                <span>Ver Perfil</span>
+            <% end %>
+        <%else%>
+            <%= link_to user_path(@chat_info.requestor_id), class:"button is-small is-success", method: :get do%>
+                <span>Ver Perfil</span>
+            <% end %>    
+        <% end %>
+        <%= link_to chats_destroy_path(id: @chat_info.id, id_actual: current_user.id), class:"button is-small is-danger", data: { confirm: "¿Seguro que quieres eliminar la conversación?" }, method: :delete do%>
+            <span>Eliminar Chat</span>
+        <% end %>
+    </div>
+</div>
+
+<style>
+    .img-circular{
+    width: 96px;
+    height: 96px;
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    }
+</style>
+
+

@@ -1,0 +1,56 @@
+<h1 class="title">¡Inicia Sesion, Animal Lover ♥!</h1>
+<h2 class="subtitle">Te extrañábamos c:</h2>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-one-fifths"></div>
+  <div class="column is-two-fifths">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :Recuerdáme %>
+        </div>
+      <% end %>
+
+      <%= render "users/shared/links" %>
+      
+      <br>
+
+      <div class="actions">
+        <%= f.submit "Iniciar Sesion" %>
+      </div>
+      
+    <% end %>
+  </div>
+
+  <div class="column is-one-fifths">
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://media.istockphoto.com/vectors/cute-jack-russell-terrier-paws-up-over-wall-dog-face-cartoon-vector-vector-id1158317995?k=6&m=1158317995&s=612x612&w=0&h=u5HcYOT4Z6F0UD2EyI0Ov0JEm-8E6z-yRtAEEjHlhlg=">
+    </figure>
+
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://media.istockphoto.com/vectors/cute-french-bulldog-puppy-paws-up-over-wall-dog-face-cartoon-vector-vector-id1160077554?b=1&k=6&m=1160077554&s=612x612&w=0&h=Bhi_sBbCXrYEg9NHPoqQN0qLHwRHcRS069PUDDEABN0=">
+    </figure>
+  </div>
+
+  <div class="column is-one-fifths">
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://img.freepik.com/vector-gratis/perro-gracioso-shih-tzu-patas-sobre-pared_42750-500.jpg?size=338&ext=jpg">
+    </figure>
+
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://img.freepik.com/vector-gratis/lindo-perro-husky-siberiano-patas-sobre-dibujos-animados-pared_42750-520.jpg?size=338&ext=jpg">
+    </figure>
+  </div>
+
+</div>

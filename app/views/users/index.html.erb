@@ -1,0 +1,149 @@
+<html>
+<% if user_signed_in? && current_user.administrador%>
+    <h1 class="title">Todos nuestros Animal Lovers ♥</h1>
+
+    <p><%= notice %></p>
+
+    <table class="table is-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Administrador</th>
+                <th>Clasificación</th>
+                <th>Mail</th>
+                <th>Teléfono</th>
+                <th>Comuna</th>
+                <th>Ciudad</th>
+                <th>Género</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @users.each do |user| %>
+                <%if !user.administrador%>
+                    <tr>
+                        <td><%= user.nombre %></td>
+                        <td><%= user.administrador %></td>
+                        <% if user.clasificacion == 0%>
+                            <td>Sin Clasificación</td>
+                        <% else%>
+                            <td><%= user.clasificacion %></td>
+                        <% end%>
+                        <td><%= user.email %></td>
+                        <td><%= user.numero %></td>
+                        <td><%= user.comuna %></td>
+                        <td><%= user.ciudad %></td>
+                        <td><%= user.genero %></td>
+                        <td><%= link_to "Ver Detalle", users_show_path(user.id) %></td>
+                    </tr>
+                <%end%>
+            <% end %>
+        </tbody>
+    </table>
+    <h1 class="title">Todos nuestros Administradores♥</h1>
+
+    <p><%= notice %></p>
+
+    <table class="table is-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Administrador</th>
+                <th>Clasificacion</th>
+                <th>Mail</th>
+                <th>Telefono</th>
+                <th>Comuna</th>
+                <th>Ciudad</th>
+                <th>Genero</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @users.each do |user| %>
+                <%if user.administrador%>
+                    <tr>
+                        <td><%= user.nombre %></td>
+                        <td><%= user.administrador %></td>
+                        <% if user.clasificacion == 0%>
+                            <td>Sin Clasificación</td>
+                        <% else%>
+                            <td><%= user.clasificacion %></td>
+                        <% end%>
+                        <td><%= user.email %></td>
+                        <td><%= user.numero %></td>
+                        <td><%= user.comuna %></td>
+                        <td><%= user.ciudad %></td>
+                        <td><%= user.genero %></td>
+                        <td><%= link_to "Ver Detalle", users_show_path(user.id) %></td>
+                    </tr>
+                <%end%>
+            <% end %>
+        </tbody>
+    </table>
+    <h1 class="title">Hay personas que quieren ser administrador, <%=current_user.nombre%>♥</h1>
+    <div style="display: flex; flex-flow: row wrap;">
+        <% @solicitudes_admin.each do |solicitud| %>
+            <div style="border: solid 1px; width: 300px; padding: 10px; align-text: center; margin: 5px;">
+                <nav class="level">
+                    <% if User.find(solicitud.requestor_id).image.attached? %>
+                        <div class="level-item">
+                            <%= User.find(solicitud.requestor_id).nombre%>
+                        </div>
+                        <div class="level-item">
+                            <%= image_tag User.find(solicitud.requestor_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                        </div>
+                    <%else%>
+                        <div class="level-item">
+                          <%= User.find(solicitud.requestor_id).nombre%>
+                        </div>
+                        <div class="level-item">
+                            <figure class="image is-48x48">
+                                <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                            </figure>
+                      </div>
+                    <%end%>
+                    <div class="level-item">
+                        <%= link_to admin_request_process_path(id: solicitud.id, status: "accepted"), class:"button is-small is-success", data: { confirm: "¿Seguro que la quieres aceptar?" }, method: :put do%>
+                                <span>Aceptar</span>
+                        <% end %>
+                    </div>
+                    <div class="level-item">
+                        <%= link_to admin_request_process_path(id: solicitud.id, status: "declined"), class:"button is-small is-danger", data: { confirm: "¿Seguro que la quieres rechazar?" }, method: :put do%>
+                                <span>Rechazar</span>
+                        <% end %>
+                    </div>
+                </nav>
+            </div>
+        <%end%>
+    </div>
+<% else%>
+    <div class="columns is-mobile"> 
+        <div class="column">       
+            <h1 class="title">Acceso denegado :(</h1>
+            <br>
+            <p class="subtitle" "is-size-4">Nuestros usuarios confían en que no compartamos su información.</p>
+
+
+            <p class="subtitle" "is-size-4">¡Inicia sesión y/o pide ser administrador (en tu perfil) para poder ver a todos nuestros Animal Lovers♥!</p>
+        </div>
+        <div class="column"> 
+            <figure class="image is-256x256">
+                <img class="is-rounded" src="https://media1.tenor.com/images/dd3d446811e0c929f1a76ca87f389fa6/tenor.gif">
+            </figure>
+        </div>
+    </div>
+<% end%>
+<style>
+    .img-circular{
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    }
+</style>
+</html>

@@ -1,0 +1,30 @@
+<%= form_with model: @request, local: true do |form| %>
+
+  <!-- Estatus de la solicitud "pending"  -->
+
+  <%= form.hidden_field :status, value: "pending"%>
+
+  <!-- Id mio (solicitante) -->
+
+  <%= form.hidden_field :requestor_id, value: current_user.id%>
+
+  <!-- Id de la persona (solicitado) CAMBIAR CUANDO LO LINKE CON PUBLICACIONES-->
+
+  <%= form.hidden_field :receiver_id, value: @user_receiver.id%>
+
+  <%= form.hidden_field :tipo, value: @publication.tipo%>
+
+  <%= form.hidden_field :publication_id, value: @publication.id%>
+  <div class="field">
+    <%= form.label :Contenido %>
+    <%= form.text_field :contenido %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Crear Solicitud" %>
+  </div>
+    
+
+<% end %>
+
+<!-- este formulario al hacer submit, llamará a la ruta post -->

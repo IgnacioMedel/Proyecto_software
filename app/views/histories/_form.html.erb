@@ -1,0 +1,8 @@
+<%= form_with model: @history, local: true do |form| %>
+  <%= form.hidden_field :historier_id, value: @historier_id.id%>
+    <%= form.hidden_field :receiver_id, value: @receiver_id.id%>
+  <div class="actions">
+    <%= form.submit "Crear historial" %>
+  </div> 
+<% end %>
+    

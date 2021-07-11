@@ -1,0 +1,19 @@
+<p><%= notice %></p>
+<%if @historiers.empty?%>
+    <h1 class="title">Tu historial esta vacío :(</h1>
+<%else%>
+    <h1 class="title">Acá puedes ver todas tus transacciones, <%=current_user.nombre%></h1>
+    <table class="table is-bordered">
+        <thead>
+            <tr>
+                <th>Publicador</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+    <tbody>
+        <%@historiers.each do |historial|%>
+            <td><%= User.find(historial.receiver_id).nombre %></td>
+            <td><%= historial.tipo %></td>
+        <%end%>
+    </tbody>
+<%end%>

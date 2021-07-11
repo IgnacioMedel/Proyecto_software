@@ -1,0 +1,42 @@
+<h1 class="title"> Publicaciones</h1>
+<br>
+<%if current_user.id == @user.id || current_user.administrador%>
+    <%if @publications.empty?%>
+        <h3 class="subtitle">Aún no has realizado publicaciones, ¡Anímate <%=@user.nombre%>!</h3>
+    <%else%>
+        <h3 class="subtitle">Acá estan tus publicaciones, <%=@user.nombre%>♥</h3>
+        <div style="display: flex; flex-flow: row wrap; ">
+            <%@publications.each do |publicacion|%>
+                <div style="border: solid 1px; width: 500px; padding:40px; align-text: center; margin: 1px;">
+                    <div class="level">
+                        <div class="level-item">
+                            <%if publicacion.image.attached?%>
+                                <%= image_tag publicacion.image, class: "sm-img", size: "64x64", :class => "img-circular"%>
+                            <%else%>
+                                <figure class="image is-64x64">
+                                    <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                                </figure>
+                            <%end%>
+                        </div>
+                        <div class="level-item">
+                            <%=publicacion.titulo%>
+                        </div>
+                        <nav class="level">
+                            <div class="level-item">
+                                <%= link_to publication_path(publicacion.id), class:"button is-small has-background-primary-light", method: :get do%>
+                                        <span>Detalle</span>
+                                <% end %>
+                            </div>
+                            <div class="level-item">
+                                <%= link_to publication_path(publicacion.id), class:"button is-small is-danger", data: { confirm: "¿Seguro que quieres eliminar la publicación?" }, method: :delete do%>
+                                        <span>Eliminar</span>
+                                <% end %>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            <%end%>
+        </div> 
+    <%end%>
+
+<%end%>

@@ -1,0 +1,18 @@
+<h1>Historiales</h1>
+
+<p><%= notice %></p>
+
+
+<h2>A continuación se muestran los historiales de los usuarios: </h4>
+
+<div style="display: flex; flex-flow: row wrap; ">
+<%@histories.each do |history|%>
+      <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 5px;">
+        <p><%= history.id_receiver, history_path(publication) %></p>
+      </div>
+  <% end %>
+</div>
+
+
+
+

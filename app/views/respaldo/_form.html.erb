@@ -1,0 +1,50 @@
+<%= form_with model: @user, local: true do |form| %>
+  <div class="field">
+    <%= form.label :Nombre %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Apellidos %>
+    <%= form.text_field :apellidos %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Género%>
+    <%= form.text_field :sexo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :RUT %>
+    <%= form.text_field :rut %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Mail %>
+    <%= form.text_field :mail %>
+  </div>
+
+  <div class="field">
+    <%= form.label :"Administrador" %>
+    <%= form.text_field :admin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Contraseña %>
+    <%= form.text_field :contrasena %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Imagen  %>
+    <%= form.file_field :image, accept: 'image/png, image/jpeg' %>
+  </div>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link">Aceptar</button>
+    <div class="control">
+    </div>
+    
+<% end %>
+
+<!-- este formulario al hacer submit, llamará a la ruta post -->

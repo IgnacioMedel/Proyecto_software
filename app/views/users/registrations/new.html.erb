@@ -1,0 +1,97 @@
+<h1 class="title">¡Regístrate, Animal Lover!</h1>
+
+<br>
+<div class="columns is-mobile is-centered">
+
+  <div class="column is-one-fifths"></div>
+
+  <div class="column is-one-fifths">
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://4.bp.blogspot.com/-LolUU_J1aH4/W2Apt0arC8I/AAAAAAAACYE/qBepalS5EQgCxqD5IruCkww77F1lDcuXQCLcBGAs/s1600/tenor.gif">
+    </figure>
+  </div>
+
+  <div class="column is-one-fifths">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <!-- Nombre Usuario -->
+      <div class="field">
+        <%= f.label :nombre %><br />
+        <%= f.text_field :nombre, autofocus: true, autocomplete: "name"%>
+      </div>
+
+      <!-- Foto de Perfil -->
+      <div class="field">
+        <%= f.label :foto_de_perfil %>
+        <%= f.file_field :image, accept: 'image/png, image/jpeg, image/jpg' %>
+      </div>
+
+      <!-- Comuna usuario-->
+      <div class="field">
+        <%= f.label :comuna %><br />
+        <%= f.text_field :comuna%>
+      </div>
+
+      <!-- Ciudad usuario-->
+      <div class="field">
+        <%= f.label :ciudad %><br />
+        <%= f.text_field :ciudad%>
+      </div> 
+
+      <!-- Mail usuario-->
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autocomplete: "email" %>
+      </div>
+
+      <!-- Numero usuario-->
+      <div class="field">
+        <%= f.label :número %><br />
+        <%= f.text_field :numero%>
+      </div>
+
+      <!-- Clave usuario-->
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <!-- Confirmacion usuario-->
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <!-- Genero usuario-->
+      <div class="field">
+      <%= f.label :género %><br />
+      <%= f.label :genero, "Mujer", :value => "mujer"  %>
+      <%= f.radio_button :genero, "mujer" %>
+      <br>
+      <%= f.label :genero, "Hombre", :value => "hombre" %>
+      <%= f.radio_button :genero, "hombre" %>
+      <br>
+      <%= f.label :genero, "No binario", :value => "no_binario" %>
+      <%= f.radio_button :genero, "no_binario", :checked => true %>
+      </div>
+      <br />
+
+      <div class="actions">
+        <%= f.submit "Crear Cuenta" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="column is-one-fifths">
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://c.tenor.com/RvMZMiTblfQAAAAM/oh-hey-oh-hey-there.gif">
+    </figure>
+  </div>
+  
+  <div class="column is-one-fifths"></div>
+</div>
+<!-- <%= render "users/shared/links" %> -->

@@ -1,0 +1,16 @@
+<p><%= notice %></p>
+
+<h2> Comentarios </h2>
+
+<div style="display: flex; flex-flow: row wrap; ">
+  <% if publication.comments.empty? %>
+    <p>No hay comentarios anteriores</p>
+  <% else %>
+    <% publication.comments.each do |comment| %>
+      <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 5px;">
+        <p><%= comment.contenido %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

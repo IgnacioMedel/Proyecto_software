@@ -1,0 +1,23 @@
+<h1>Mensajes</h1>
+
+<p><%= notice %></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Contenido</th>
+            <th colspan="3">Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @messages.each do |message| %>
+            <tr>
+                <td><%= message.contenido %></td>
+                <td><%= link_to 'Revisar', message_path(message.id)%></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= link_to 'Subir nuevo mensaje', new_message_path %>

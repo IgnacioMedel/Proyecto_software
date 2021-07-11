@@ -1,0 +1,63 @@
+<h2 class="title"> Clasificaciones </h2>
+<br>
+<%if @reviews.empty?%>
+    <h3 class="subtitle">Aún no has recibido clasificaciones, <%=current_user.nombre%> :(<h3>
+<%else%>
+    <h3 class="subtitle">¡Te han clasificado! Aquí puedes ver lo que piensan de ti, <%=current_user.nombre%>♥</h3>
+    <div style="display: flex; flex-flow: row wrap; ">
+        <%@reviews.each do |review|%>
+            <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 1px;">
+                <div class="tile is-4 is-vertical">
+                    <div class="tile">
+                        <div class="level">
+                            <div class="level-item">
+                                <%= User.find(review.requestor_id).nombre%>
+                                <%if User.find(review.requestor_id).image.attached?%>
+                                    <%= image_tag User.find(review.requestor_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                                <%else%>
+                                    <figure class="image is-48x48">
+                                        <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                                    </figure>
+                                <%end%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile">
+                        <div class="level">
+                            <div class="level-item">
+                                <p>Contenido: </p>
+                                <br>
+                            </div>
+                            <div class="level-item">
+                                <%= review.contenido%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile">
+                        <div class="level">
+                            <div class="level-item">
+                                <p>Clasificación: </p>
+                            </div>
+                            <div class="level-item">
+                                <%=review.calificacion%>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        <%end%>
+    </div>
+<%end%>
+<style>
+    .img-circular{
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    }
+</style>
+
+

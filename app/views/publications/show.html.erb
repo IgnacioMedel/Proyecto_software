@@ -1,0 +1,87 @@
+<p><%= notice %></p>
+<%if user_signed_in?%>
+    <%if current_user.id == @publication.user_id%>
+        <div class="level-right">
+            <div class="level-item">
+                <div class="buttons">
+                    <%= link_to edit_publication_path(@publication.id), class:"button is-primary is-light", method: :get do%>
+                            <strong>Editar Publicación</strong>
+                    <% end %>
+                </div>
+            </div>
+            <div class="level-item">
+                <div class="buttons">
+                    <%= link_to publication_path(@publication.id), class:"button is-danger", method: :delete do%>
+                            <strong>Eliminar Publicación</strong>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <%end%>
+<%end%>
+
+
+<strong>Título:</strong>
+<%= @publication.titulo%>
+    <div class="column is-two-fifths">
+        <% if @publication.image.attached? %>
+            <%= image_tag @publication.image, class: "sm-img", size: "350x250" %>
+            <%else%>
+                <img src="https://sworna.com/wp-content/uploads/2020/07/pp.png", size: "350x250">
+            <% end %>
+    </div>
+<br>
+<strong>Especie:</strong>
+<%= @publication.especie%>
+<br>
+<strong>Tipo:</strong>
+<%= @publication.tipo%>
+<br>
+<strong>Precio:</strong>
+<%= @publication.precio%>
+<br>
+<strong>Dirección:</strong>
+<%= @publication.direccion%>
+    <div class="column is-two-fifths">
+    
+        <% @user2 = User.find(@publication.user_id) %>
+        <strong>Autor de publicación:</strong>
+        <%= @user2.nombre %>
+        
+
+
+<% if user_signed_in? %>
+    <%if current_user.id == @publication.user_id %>
+        <p>
+            <p><%= link_to 'Volver', publications_path %> <%= link_to 'Editar', edit_publication_path(@publication.id) %> <%= link_to 'Eliminar', publication_path(@publication.id), method: :delete %></p>
+        </p>
+    <%elsif current_user.administrador%>
+        <div class="buttons">
+            <%= link_to publication_path(@publication.id), class:"button is-danger", method: :delete do%>
+                    <strong>Eliminar Publicación</strong>
+            <% end %>
+        </div>
+    <%else%>
+        <div class="buttons">
+            <%= link_to user_path(publication_id: @publication.user_id), class:"button is-primary", method: :get do%>
+                    <strong>Ver Perfil</strong>
+            <% end %>
+        </div>
+        <div class="buttons">
+            <%= link_to chats_request_path(requestor_id: current_user.id, receiver_id: @publication.user_id), class:"button is-success", method: :post do%>
+                    <strong>Mandar Solicitud Mensaje</strong>
+            <% end %>
+        </div>
+    <%end%>
+
+    <%= render partial: "comments/index", locals: {publication: @publication} %>
+
+    <p>¡Crea un comentario! </p>
+    <%= render partial: "comments/form", locals: {publication: @publication} %>
+    <div class="buttons">
+        <%= link_to new_request_path(publication_id: @publication.id, receiver_id: @publication.user_id, requestor_id: current_user.id), class:"button is-danger", method: :get do%>
+                <strong>Hacer solicitud</strong>
+        <% end %>
+    </div>
+<% end %>
+

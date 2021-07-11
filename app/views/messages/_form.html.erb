@@ -1,0 +1,19 @@
+  <%= form_with model: @message, method: :post, local: true do |form| %>
+    <%= form.hidden_field :chat_id, value: @chat_info.id%>
+    <%= form.hidden_field :speaker_id, value: current_user.id%>
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <div class="field">
+            <%= form.text_field :contenido, :value=>"",:size => 40 %>
+          </div>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+            <%= form.submit "Enviar" %>
+        </div>
+      </div>  
+    </nav>
+  <% end %>
+<!-- este formulario al hacer submit, llamará a la ruta post -->

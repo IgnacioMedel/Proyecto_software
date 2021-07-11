@@ -1,0 +1,11 @@
+<%= form_with model: @request, local: true do |form| %>
+  <!-- Id mio (solicitante) -->
+  <%= form.hidden_field :requestor_id, value: @requestor_id.id%>
+  <!-- Id de la persona (solicitado) CAMBIAR CUANDO LO LINKE CON PUBLICACIONES-->
+    <%= form.hidden_field :receiver_id, value: @receiver_id.id%>
+  <div class="actions">
+    <%= form.submit "Crear Solicitud" %>
+  </div> 
+<% end %>
+
+<!-- este formulario al hacer submit, llamará a la ruta post -->

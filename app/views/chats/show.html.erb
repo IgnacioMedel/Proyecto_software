@@ -1,0 +1,170 @@
+<p><%= notice %></p>
+
+<h2 class="title"> Chats </h2>
+
+<% if !@chats_receiver.empty? %>
+  <h3 class="subtitle"> ¡Estas solicitudes de Chat te han mandado, <%=current_user.nombre%>♥!</h3>
+  <div style="display: flex; flex-flow: row wrap; ">
+    <% @chats_receiver.each do |chat| %>
+      <div style="border: solid 1px; width: 225px; padding: 10px; align-text: center; margin: 1px;">
+        <% if chat.status == "pending" %>
+          <% if chat.requestor_id == current_user.id %>
+            <% if User.find(chat.receiver_id).image.attached? %>
+              <div class="level-item">
+                <%= image_tag User.find(chat.receiver_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                <%= User.find(chat.receiver_id).nombre%>
+              </div>
+            <%else%>
+              <div class="level-item">
+                <figure class="image is-48x48">
+                  <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                </figure>
+                <%= User.find(chat.receiver_id).nombre%>
+              </div>
+            <%end%>
+          <%else%>
+            <% if User.find(chat.requestor_id).image.attached? %>
+              <div class="level-item">
+                <%= image_tag User.find(chat.requestor_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                <%= User.find(chat.requestor_id).nombre%>
+              </div>
+            <%else%>
+              <div class="level-item">
+                <figure class="image is-48x48">
+                  <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                </figure>
+                <%= User.find(chat.requestor_id).nombre%>
+              </div>
+            <%end%>
+          <%end%>
+          <nav class="level">
+            <div class="level-item">
+                <%= link_to chats_request_process_path(chat.id, status: "accepted", id_actual: current_user.id), class:"button is-small is-success", data: { confirm: "¿Seguro que la quieres aceptar?" }, method: :put do%>
+                        <span>Aceptar</span>
+                <% end %>
+            </div>
+            <div class="level-item">
+                <%= link_to chats_request_process_path(chat.id, status: "declined", id_actual: current_user.id), class:"button is-small is-danger", data: { confirm: "¿Seguro que la quieres rechazar?" }, method: :put do%>
+                        <span>Rechazar</span>
+                <% end %>
+            </div>
+          </nav> 
+        <% end %>
+      </div> 
+    <% end%>
+  </div>
+<% end%>
+
+
+<% if @chats.empty? %>
+  <h3 class="subtitle">¡No has hablado con nadie, <%=current_user.nombre%> :(!</h3>
+<% else %>
+  <h3 class="subtitle"> ¡Ya hablaste con estas personas, <%=current_user.nombre%>♥!</h3>
+  <div style="display: flex; flex-flow: row wrap;">
+    <% @chats.each do |chat| %>
+      <% if chat.status == "accepted" %>
+        <div style="border: solid 1px; width: 300px; padding: 10px; align-text: center; margin: 5px;">
+          <nav class="level">
+            <% if chat.requestor_id == current_user.id %>
+              <% if User.find(chat.receiver_id).image.attached? %>
+                <div class="level-item">
+                  <%= User.find(chat.receiver_id).nombre%>
+                </div>
+                <div class="level-item">
+                  <%= image_tag User.find(chat.receiver_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                </div>
+              <%else%>
+                  <div class="level-item">
+                    <%= User.find(chat.receiver_id).nombre%>
+                  </div>
+                <div class="level-item">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                  </figure>
+                </div>
+              <%end%>
+            <%else%>
+              <% if User.find(chat.requestor_id).image.attached? %>
+                <div class="level-item">
+                  <%= User.find(chat.requestor_id).nombre%>
+                </div>
+                <div class="level-item">
+                  <%= image_tag User.find(chat.requestor_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                </div>
+              <%else%>
+                <div class="level-item">
+                  <%= User.find(chat.requestor_id).nombre%>
+                </div>
+                <div class="level-item">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                  </figure>
+                </div>
+              <%end%>
+            <%end%>
+            <div class="level-item">
+                <div class="buttons">
+                  <a class="button is-success" href=<%=message_path(chat.id)%>>
+                  <strong>Ver Mensajes</strong>
+                  </a>
+                </div>
+            </div>
+          </nav>   
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+<% if !@chats_requestor.empty?%>
+  <h3 class="subtitle"> Estas solicitudes de Chat has mandado, pero aún no te responden, <%=current_user.nombre%> :(</h3>
+  <nav class="level-left">
+    <div style="display: flex; flex-flow: row wrap; ">
+      <% @chats_requestor.each do |chat| %>
+        <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 5px;">
+          <% if chat.status == "pending" %>
+            <% if chat.requestor_id == current_user.id %>
+              <% if User.find(chat.receiver_id).image.attached? %>
+                <div class="level-item">
+                  <%= image_tag User.find(chat.receiver_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                  <%= User.find(chat.receiver_id).nombre%>
+                </div>
+              <%else%>
+                <div class="level-item">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                  </figure>
+                  <%= User.find(chat.receiver_id).nombre%>
+                </div>
+              <%end%>
+            <%else%>
+              <% if User.find(chat.requestor_id).image.attached? %>
+                <div class="level-item">
+                  <%= image_tag User.find(chat.requestor_id).image, class: "sm-img", size: "48x48", :class => "img-circular"%>
+                  <%= User.find(chat.requestor_id).nombre%>
+                </div>
+              <%else%>
+                <div class="level-item">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://sworna.com/wp-content/uploads/2020/07/pp.png">
+                  </figure>
+                  <%= User.find(chat.requestor_id).nombre%>
+                </div>
+              <%end%>
+            <%end%>
+          <% end %>
+        </div>  
+      <% end %>
+    </nav>
+  </div>
+<% end %>
+<style>
+    .img-circular{
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    }
+</style>

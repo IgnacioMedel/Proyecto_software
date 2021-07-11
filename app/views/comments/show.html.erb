@@ -1,0 +1,11 @@
+<p><%= notice %></p>
+
+<p>
+    <strong>Contenido</strong>
+    <%= @comment.contenido %>
+</p>
+
+
+<p><%= link_to 'Volver', comments_path %></p>
+<p><%= link_to 'Editar', edit_comment_path(@comment.id) %></p>
+<p><%= link_to 'Eliminar', comment_path(@comment), method: :delete %></p>

@@ -1,0 +1,77 @@
+<h1>Publicaciones</h1>
+
+<p><%= notice %></p>
+
+
+<style>
+.sm-img{
+    width: 200px;
+    height: auto;
+}
+</style>
+
+<h2>Buscar por nombre </h4>
+<%=form_tag(publications_path, method: :get) do%>
+    <%= text_field_tag(:search, params[:search]) %>
+
+    <%= submit_tag ("Buscar")%>
+<%end%>
+
+<div style="display: flex; flex-flow: row wrap; ">
+<%@publications.each do |publication|%>
+      <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 5px;">
+        <p><%= link_to publication.titulo, publication_path(publication) %></p>
+            <p><% if publication.image.attached? %></p>
+                <%= image_tag publication.image, class: "sm-img" %>
+                <% end %></p>
+      </div>
+  <% end %>
+</div>
+
+<h2>Buscar por especie </h4>
+<%=form_tag(publications_path, method: :get) do%>
+    <%= text_field_tag(:especie) %>
+    <%= submit_tag ("Buscar")%>
+<%end%>
+
+<div style="display: flex; flex-flow: row wrap; ">
+<%@publications_2.each do |publication|%>
+      <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 5px;">
+        <p><%= link_to publication.titulo, publication_path(publication) %></p>
+            <p><% if publication.image.attached? %></p>
+                <%= image_tag publication.image, class: "sm-img" %>
+                <% end %></p>
+      </div>
+  <% end %>
+</div>
+
+<h2>Buscar por tipo </h4>
+<%=form_tag(publications_path, method: :get) do%>
+    <%= text_field_tag(:tipo) %>
+    <%= submit_tag ("Buscar")%>
+<%end%>
+
+<div style="display: flex; flex-flow: row wrap; ">
+<%@publications_3.each do |publication|%>
+      <div style="border: solid 1px; width: 200px; padding: 10px; align-text: center; margin: 5px;">
+        <p><%= link_to publication.titulo, publication_path(publication) %></p>
+            <p><% if publication.image.attached? %></p>
+                <%= image_tag publication.image, class: "sm-img" %>
+                <% end %></p>
+      </div>
+  <% end %>
+</div>
+
+<%= link_to 'Subir nueva publicación',new_publication_path %>
+
+<!-- 
+<div>
+<% @publications.each do |publication|  %>
+    <div>
+        <h3><%= link_to publication.titulo, publication_path(publication) %></h3>
+            <p><% if publication.image.attached? %></p>
+                <%= image_tag publication.image, class: "sm-img" %>
+            <% end %></p>
+    </div>
+    <% end %>
+</div>

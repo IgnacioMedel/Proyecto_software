@@ -1,0 +1,47 @@
+<div class="columns is-mobile">
+  <div class="column is-full">
+    <%= form_with model: @publication, local: true do |form| %>
+      <div class="field">
+        <%= form.label :Título %>
+        <%= form.text_field :titulo %>
+      </div>
+
+      <div class="field">
+        <%= form.label :Imagen  %>
+        <%= form.file_field :image, accept: 'image/png, image/jpeg' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :Especie %>
+        <%= form.text_field :especie %>
+      </div>
+
+      <div class="field">
+        <%= form.label :Tipo %><br />
+        <%= form.label :adopcion, "Adopción", :value => "adopcion"  %>
+        <%= form.radio_button :tipo, "adopcion" %>
+        <%= form.label :venta, "Venta", :value => "venta" %>
+        <%= form.radio_button :tipo, "venta" %>
+      </div>
+      
+      <i>(No rellenar si desea marco 'Adopcion')</i>
+      <div class="field">
+        <%= form.label :Precio %> <i style="color:white">
+        <%= form.text_field :precio %>
+      </div>
+
+      <div class="field">
+        <%= form.label :Dirección %>
+        <%= form.text_field :direccion %>
+      </div>
+
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link">Aceptar</button>
+        <div class="control">
+        </div>
+    <% end %>
+  </div>
+</div>
+    

@@ -1,0 +1,40 @@
+<html>
+  <div class="columns is-mobile">
+    <%= form_with model: @review, method: :post,local: true do |form| %>
+      <div class="column is-centered">
+        <%= form.hidden_field :requestor_id, value: @requestor.id%>
+        <%= form.hidden_field :receiver_id, value: @receiver.id%>
+        <div class="level">
+          <div class="level-item">
+            <div class="field">
+              <%= form.label :Opinión %>
+              <%= form.text_field :contenido , :value=>"",:size => 40 %>
+            </div>
+          </div>
+          <div class="level-item"></div>
+          <div class="level-item">
+            <!-- Nota al usuario-->
+            <div class="field">
+              <%= form.label :Clasificación %>
+              <%= form.label :calificacion, "1", :value => 1 %>
+              <%= form.radio_button :calificacion, "1" %>
+              <%= form.label :calificacion, "2", :value => 2 %>
+              <%= form.radio_button :calificacion, "2" %>
+              <%= form.label :calificacion, "3", :value => 3 %>
+              <%= form.radio_button :calificacion, "3"%>
+              <%= form.label :calificacion, "4", :value => 4 %>
+              <%= form.radio_button :calificacion, "4" %>
+              <%= form.label :calificacion, "5", :value => 5 %>
+              <%= form.radio_button :calificacion, "5", :checked => true%>
+            </div>
+          </div>
+        </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link">Aceptar</button>
+            <div class="control">
+          </div>
+      </div>
+    <% end %>
+  </div>
+</html>

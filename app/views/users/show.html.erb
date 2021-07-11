@@ -1,0 +1,172 @@
+<% if user_signed_in?%>
+    <% if @user.genero == "hombre"%>
+        <h1 class="title">Perfil de nuestro querido ♥<%= @user.nombre %>♥</h1>
+    <% elsif @user.genero == "mujer"%>
+        <h1 class="title">Perfil de nuestra querida ♥<%= @user.nombre %>♥</h1>
+    <% else%>
+        <h1 class="title">Perfil de nuestro queride ♥<%= @user.nombre %>♥</h1>
+    <% end%>
+
+    <div class="columns is-mobile">
+        <div class="column is-two-fifths">
+            <% if @user.image.attached? %>
+                <%= image_tag @user.image, class: "sm-img", size: "350x250" %>
+            <%else%>
+                <img src="https://sworna.com/wp-content/uploads/2020/07/pp.png", size: "350x250">
+            <% end %>
+        </div>
+
+        <div class="column is-one-fifths">
+            <p class="is-size-3">Datos de usuario:</p>
+            <br>
+            <p class="is-size-4">Nombre: <%=@user.nombre%> </p>
+            <br>
+            <p class="is-size-4">Teléfono: <%=@user.numero%></p>
+            <br>
+            <p class="is-size-4">Género: <%=@user.genero%> </p>
+            <br>
+            <% if @user.clasificacion == 0%>
+                <p class="is-size-4">Clasificación: sin calificar</p>
+            <% else%>
+                <p class="is-size-4">Clasificación: <%=@user.clasificacion%></p>
+            <%end%>
+            <br>
+            <p class="is-size-4">Locacion: <%=@user.comuna%> de <%=@user.ciudad%></p>
+            <br>
+            <p class="is-size-4">Administrador: <%=@user.administrador%> </p>
+
+        </div>
+
+        <div class="column is-one-fifths">
+            <% if @user.id != current_user.id && !current_user.administrador%>
+                <div class="buttons">
+                    <%= link_to show_user_publications_path(id: @user.id), class:"button is-warning", method: :get do%>
+                        <span class="icon-text">
+                            <strong>Ver Publicaciones</strong>
+                        </span>
+                    <% end %>
+                </div>
+                <div class="buttons">
+                    <%= link_to chats_request_path(requestor_id: current_user.id, receiver_id: @user.id), class:"button is-success", method: :post do%>
+                        <span class="icon-text">
+                            <strong>Enviar Mensaje</strong>
+                        </span>
+                    <% end %>
+                </div>
+                <div class="buttons">
+                    <%= link_to new_review_path(requestor_id: current_user.id, receiver_id: @user.id), class:"button is-primary", method: :get do%>
+                        <span class="icon-text">
+                            <strong>Dejar Reseña</strong>
+                        </span>
+                    <% end %>
+                </div>
+            <% end %>
+            <% if @user.id == current_user.id%>
+                <%if !current_user.administrador%>
+                    <div class="buttons">
+                        <%= link_to show_user_publications_path(id: @user.id), class:"button is-warning", method: :get do%>
+                            <span class="icon-text">
+                                <strong>Ver Publicaciones</strong>
+                            </span>
+                        <% end %>
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-success" href=<%=chats_show_path(@user.id)%>>
+                            <strong>Ver Mensajes</strong>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-primary" href=<%=review_path(current_user.id)%>>
+                            <strong>Ver Clasificaciones</strong>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-success is-light" href=<%=request_path(current_user.id)%>>
+                            <strong>Ver Solicitudes</strong>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-info is-light" href=<%=edit_user_registration_path(@user.id)%>>
+                            <strong>Editar Perfil</strong>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-info is-light" href=<%=history_path(@user.id)%>>
+                            <strong>Mi Historial</strong>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <%if WannaBeAdministrator.where(requestor_id: @user.id).empty?%>
+                            <%= link_to admin_request_path(id: current_user.id), class:"button is-link", data: { confirm: "Una vez seas administrador, no podrás ser un usuario normal, solo moderaras. ¡Pero puedes dejar de serlo cuando quieras!" }, method: :post do%>
+                                <span class="icon-text has-text-white">
+                                    <span class="icon">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                    <strong>¡Quiero ser Administrador!</strong>
+                                </span>
+                            <% end %>
+                        <%else%>
+                            <h3 class="subtitle">¡Estamos procesando tu solicitud de administrador!</h3>
+                        <%end%>
+                    </div>
+                    <div class="buttons">
+                        <%= link_to delete_specific_user_path(id: @user), class:"button is-danger is-light", data: { confirm: "¿Seguro :c? ¡Nuestras puertas estan abiertas si quieres volver♥!" }, method: :delete do%>
+                            <span class="icon-text has-text-danger">
+                                <span class="icon">
+                                    <i class="fas fa-ban"></i>
+                                </span>
+                                <strong>Eliminar Cuenta</strong>
+                            </span>
+                        <% end %>
+                    </div>
+                <%else%>
+                    <div class="buttons">
+                        <a class="button is-primary is-light" href=<%=edit_user_registration_path(@user.id)%>>
+                            <strong>Editar Perfil</strong>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <%= link_to stop_being_admin_process_path(id: @user.id), class:"button is-link", data: { confirm: "Es difícil ser Administrador, ¿Quieres un descanso?" }, method: :post do%>
+                            <span class="icon-text has-text-white">
+                                <span class="icon">
+                                    <i class="fas fa-heart-broken"></i>
+                                </span>
+                                <span>Dejar de ser Administrador</span>
+                            </span>
+                        <% end %>
+                    </div> 
+                <%end%>
+            <%else%>
+                <%if current_user.administrador%>
+                    <div class="buttons">
+                        <%= link_to delete_specific_user_path(id: @user), class:"button is-danger is-light", data: { confirm: "¿Deseas eliminar al usuario?" }, method: :delete do%>
+                            <span class="icon-text has-text-danger">
+                                <span class="icon">
+                                    <i class="fas fa-ban"></i>
+                                </span>
+                                <span>Eliminar Cuenta</span>
+                            </span>
+                        <% end %>
+                    </div>
+                <%end%>                        
+            <%end%>
+        </div>
+    </div>
+<% else%>
+    <div class="columns is-mobile"> 
+        <div class="column">       
+            <h1 class="title">Acceso denegado :(</h1>
+            <br>
+            <p class="subtitle" "is-size-4">Nuestros usuarios confían en que no compartamos su información.</p>
+            <p class="subtitle" "is-size-4">¡Inicia sesión o crea una cuenta para poder ver este perfil :D!</p>
+        </div>
+        <div class="column"> 
+            <figure class="image is-256x256">
+                <img class="is-rounded" src="https://media1.tenor.com/images/dd3d446811e0c929f1a76ca87f389fa6/tenor.gif">
+            </figure>
+        </div>
+    </div>
+
+<% end%>
+
+</div>

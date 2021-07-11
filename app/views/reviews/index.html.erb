@@ -1,0 +1,44 @@
+<h1 class="title">Reseñas</h1>
+
+<p><%= notice %></p>
+
+<% if user_signed_in? && current_user.administrador%>
+
+    <table class="table is-bordered">
+        <thead>
+            <tr>
+                <th>Realizada Por</th>
+                <th>Recibida Por</th>
+                <th>Contenido</th>
+                <th>Calificacion</th>
+                <th colspan="3">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @reviews.each do |review| %>
+                <tr>
+                    <td><%= User.find(review.requestor_id).nombre %></td>
+                    <td><%= User.find(review.receiver_id).nombre %></td>
+                    <td><%= review.contenido %></td>
+                    <td><%= review.calificacion %></td>
+                    <td><%= link_to 'Borrar', review_path(id: review.id),  method: "delete", data: {confirm: "Borrarás esta clasificación, ¿Continuar?"}%></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% else%>
+    <div class="columns is-mobile"> 
+        <div class="column">       
+            <h1 class="title">Acceso denegado :(</h1>
+            <br>
+            <p class="subtitle" "is-size-4">Nuestros usuarios confían en que no compartamos su información.</p>
+            <p class="subtitle" "is-size-4">¡Inicia sesión y/o pide ser administrador (en tu perfil) para poder ver a todos nuestros Animal Lovers♥!</p>
+        </div>
+        <div class="column"> 
+            <figure class="image is-256x256">
+                <img class="is-rounded" src="https://media1.tenor.com/images/dd3d446811e0c929f1a76ca87f389fa6/tenor.gif">
+            </figure>
+        </div>
+    </div>
+<% end%>
